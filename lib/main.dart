@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:sliding_switch/sliding_switch.dart';
 
 void main() {
@@ -13,19 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primaryColor: Colors.blue[600], fontFamily: 'Poppins'),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -54,7 +43,6 @@ class _MyHomePageState extends State<MyHomePage> {
   bool? switchValue;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
-  Color PrimaryBackgroundColor = Color(0xFF4B39EF);
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -68,157 +56,120 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-      child: Scaffold(
-        key: scaffoldKey,
-        backgroundColor: PrimaryBackgroundColor,
-        appBar: AppBar(
-          backgroundColor: PrimaryBackgroundColor,
-          automaticallyImplyLeading: false,
-          title: Text(
-            'Super UltrasonicMistMaker',
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              color: Colors.white,
-              fontSize: 22,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.lightBlue[400],
+        automaticallyImplyLeading: false,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 5.0),
+          child: Text('Super Ultrasonic Mist Maker',
+            style: TextStyle(fontSize: 22),
           ),
-          actions: [],
-          centerTitle: false,
-          elevation: 2,
+        ),        
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: Image.asset('assets/image1.png').image,
+          ),
         ),
-        body: SafeArea(
-          child: Container(
-            width: 400,
-            decoration: BoxDecoration(
-              color: Color(0xFFEEEEEE),
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: Image.asset(
-                  'assets/image.png',
-                ).image,
-              ),
-              shape: BoxShape.rectangle,
-            ),
-            child: Align(
-              alignment: AlignmentDirectional(0, -0.6),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
+        child: Column(
+          children: [
+            SizedBox(height: 55),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 35),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            // CircularPercentIndicator(
-                            //   percent: 0.7,
-                            //   radius: 60,
-                            //   lineWidth: 24,
-                            //   animation: true,
-                            //   progressColor: PrimaryBackgroundColor,
-                            //   backgroundColor: Colors.white,
-                            //   center: Text(
-                            //     '50%',
-                            //     style: TextStyle(
-                            //       fontFamily: 'Poppins',
-                            //       color: PrimaryBackgroundColor,
-                            //     ),
-                            //   ),
-                            // ),
-                            Stack(
-                              alignment: AlignmentDirectional(0, -0.4),
-                              children: [
-                                Image.asset('assets/waterlv.png'),
-                                Center(
-                                    child: Text(
-                                  "Medium",
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontFamily: 'Poppins',
-                                    color: PrimaryBackgroundColor,
-                                  ),
-                                )),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              'Water Level',
-                            ),
-                          ],
+                      Container(
+                        width: 170,
+                        height: 170,
+                        alignment: AlignmentDirectional(0, -0.3),
+                        // CircularPercentIndicator(
+                        //   percent: 0.7,
+                        //   radius: 60,
+                        //   lineWidth: 24,
+                        //   animation: true,
+                        //   progressColor: PrimaryBackgroundColor,
+                        //   backgroundColor: Colors.white,
+                        //   center: Text(
+                        //     '50%',
+                        //     style: TextStyle(
+                        //       fontFamily: 'Poppins',
+                        //       color: PrimaryBackgroundColor,
+                        //     ),
+                        //   ),
+                        // ),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: Image.asset('assets/image2.png').image,
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              '21',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 30,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              'Humidity(%)',
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              '30',
-                              style: TextStyle(
-                                fontFamily: 'Poppins',
-                                fontSize: 30,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              'Temperature (C)',
-                            ),
-                          ],
+                        child: Text('MEDIUM',
+                          style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600, color: Colors.blue[600]),
                         ),
+                      ),  
+                      SizedBox(height: 15),
+                      Text('Water Level',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.blue[600])
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 30),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SlidingSwitch(
-                        value: switchValue ??= true,
-                        height: 50,
-                        width: 150,
-                        colorOn: Color(0xFFFF0000),
-                        colorOff: Colors.white,
-                        onChanged: (newValue) async {
-                          setState(() => switchValue = newValue!);
-                          print(switchValue);
-                        },
-                        onTap: (bool value) {
-                          print(value);
-                        },
-                        onDoubleTap: (bool value) {},
-                        onSwipe: (bool value) {},
+                      Text('21',
+                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600, color: Colors.blue[600]),
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Humitity Control',
+                      Text('Humidity (%)',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.blue[600]),
+                      ),
+                      SizedBox(height: 20),
+                      Text('30',
+                        style: TextStyle(fontSize: 40, fontWeight: FontWeight.w600, color: Colors.blue[600]),
+                      ),
+                      Text('Temperature (°C)',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.blue[600]),
                       ),
                     ],
                   ),
-                ],
-              ),
+                ),            
+              ],
             ),
-          ),
+            SizedBox(height: 50),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SlidingSwitch(
+                  value: switchValue ??= true,
+                  height: 55,
+                  width: 230,
+                  colorOn: Color(0xFFFF0000),
+                  colorOff: Colors.white,
+                  onChanged: (newValue) async {
+                    setState(() => switchValue = newValue!);
+                    print(switchValue);
+                  },
+                  onTap: (bool value) {
+                    print(value);
+                  },
+                  onDoubleTap: (bool value) {},
+                  onSwipe: (bool value) {},
+                ),
+                SizedBox(height: 15),
+                Text('Humitity Control',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: Colors.blue[600]),  
+                ),
+              ],
+            ), 
+          ],
         ),
       ),
     );
