@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "244636933512",
+    "firebase_url": "https://humidity-iot-bf460-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "humidity-iot-bf460",
+    "storage_bucket": "humidity-iot-bf460.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244636933512:android:a9491b9b6f10af39f5ee3d",
+        "android_client_info": {
+          "package_name": "com.example.iot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244636933512-5ejrls96pj9v22gdfddui0h4oojgh8p3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXSeRmywQYCVTa6HLxJ02mFtsmg9C6-BE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244636933512-5ejrls96pj9v22gdfddui0h4oojgh8p3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
