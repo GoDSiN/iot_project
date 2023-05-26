@@ -47,6 +47,9 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String humidity = '0';
   String temperature = '0';
+  int waterlv = 0;
+  Color waterColor = Colors.black;
+  String watertext = "";
   bool manualValue = false;
   bool instructionValue = false;
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -63,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
           padding: const EdgeInsets.only(left: 5.0),
           child: Text(
             'Super Ultrasonic Mist Maker',
-            style: TextStyle(fontSize: 22),
+            style: TextStyle(fontSize: 16),
           ),
         ),
       ),
@@ -80,6 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
         FirebaseDatabase.instance.ref('humidity/value');
     DatabaseReference tempdb =
         FirebaseDatabase.instance.ref('temperature/value');
+    DatabaseReference waterlvdb =
+        FirebaseDatabase.instance.ref('waterlevel/value');
     DatabaseReference manualdb =
         FirebaseDatabase.instance.ref('manual');
     DatabaseReference instructiondb =
@@ -94,6 +99,20 @@ class _MyHomePageState extends State<MyHomePage> {
         temperature = event.snapshot.value.toString();
       });
     });
+    waterlvdb.onValue.listen((event) {
+      var dataSnapshot = event.snapshot;
+      var value = dataSnapshot.value;
+      if (value != null && value is num) {
+        var floatValue = value.toDouble();
+        if(floatValue < 25){
+          watertext = "LOW";
+          waterColor = Colors.red;
+        }else{
+          watertext = "HIGHT";
+          waterColor = Colors.blue;
+        }
+      }
+    });
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -103,33 +122,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       child: Column(
         children: [
-          SizedBox(height: 55),
+          SizedBox(height: 45),
           Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 35),
+                padding: const EdgeInsets.only(left: 30),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 170,
-                      height: 170,
+                      width: 150,
+                      height: 150,
                       alignment: AlignmentDirectional(0, -0.3),
-                      // CircularPercentIndicator(
-                      //   percent: 0.7,
-                      //   radius: 60,
-                      //   lineWidth: 24,
-                      //   animation: true,
-                      //   progressColor: PrimaryBackgroundColor,
-                      //   backgroundColor: Colors.white,
-                      //   center: Text(
-                      //     '50%',
-                      //     style: TextStyle(
-                      //       fontFamily: 'Poppins',
-                      //       color: PrimaryBackgroundColor,
-                      //     ),
-                      //   ),
-                      // ),
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           fit: BoxFit.cover,
@@ -137,53 +141,53 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                       child: Text(
-                        'MEDIUM',
+                        '$watertext',
                         style: TextStyle(
-                            fontSize: 23,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.blue[600]),
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            color: waterColor),
                       ),
                     ),
-                    SizedBox(height: 15),
+                    SizedBox(height: 10),
                     Text('Water Level',
                         style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 13,
                             fontWeight: FontWeight.w600,
                             color: Colors.blue[600])),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 30),
+                padding: const EdgeInsets.only(left: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       '$humidity',
                       style: TextStyle(
-                          fontSize: 40,
+                          fontSize: 35,
                           fontWeight: FontWeight.w600,
                           color: Colors.blue[600]),
                     ),
                     Text(
                       'Humidity (%)',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 13,
                           fontWeight: FontWeight.w600,
                           color: Colors.blue[600]),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 15),
                     Text(
                       '${temperature}',
                       style: TextStyle(
-                          fontSize: 40,
+                          fontSize: 35,
                           fontWeight: FontWeight.w600,
                           color: Colors.blue[600]),
                     ),
                     Text(
-                      'Temperature (Â°C)',
+                      'Temperature (°C)',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 13,
                           fontWeight: FontWeight.w600,
                           color: Colors.blue[600]),
                     ),
@@ -192,36 +196,36 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ],
           ),
-          SizedBox(height: 50),
+          SizedBox(height: 45),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SlidingSwitch(
                 value: manualValue ??= false,
-                height: 55,
-                width: 230,
+                height: 45,
+                width: 180,
                 colorOn: Color(0xFFFF0000),
-                colorOff: Colors.white,
+                colorOff: Color(0xFFFF0000),
                 onChanged: (newValue) async {
                   setState(() => manualValue = newValue!);
                   manualdb.update({"status":newValue?0:1});
-                  print(manualValue);
                 },
                 onTap: (bool value) { 
                 },
                 onDoubleTap: (bool value) {},
                 onSwipe: (bool value) {},
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 12),
               Text(
                 'Manual Control',
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 13,
                     fontWeight: FontWeight.w600,
                     color: Colors.blue[600]),
               ),
             ],
           ),
+          SizedBox(height: 25),
           Visibility(
             visible: manualValue,
             child: Column(
@@ -229,25 +233,24 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               SlidingSwitch(
                 value: instructionValue ??= false,
-                height: 55,
-                width: 230,
+                height: 45,
+                width: 180,
                 colorOn: Color(0xFFFF0000),
-                colorOff: Colors.white,
+                colorOff: Color(0xFFFF0000),
                 onChanged: (newValue) async {
                   setState(() => instructionValue = newValue!);
                   instructiondb.update({"status":newValue?0:1});
-                  print(instructionValue);
                 },
                 onTap: (bool value) { 
                 },
                 onDoubleTap: (bool value) {},
                 onSwipe: (bool value) {},
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 12),
               Text(
-                'Humitity Control',
+                'Humidiity Control',
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 13,
                     fontWeight: FontWeight.w600,
                     color: Colors.blue[600]),
               ),
